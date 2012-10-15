@@ -1,14 +1,81 @@
-<!--
-To change this template, choose Tools | Templates
-and open the template in the editor.
--->
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>KnockoutDatagrid</title>
+        <link rel="stylesheet" href="css/bootstrap.css" />
+        <link rel="stylesheet" href="css/bootstrap-responsive.css" />
+        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.8.0.js"></script>
+        <script type="text/javascript" src="/js/bootstrap.js"></script>
+        <script type="text/javascript" src="/js/knockout.js"></script>
+        <script type="text/javascript" src="js/knockoutJsGrid.js"></script>
+        <script type="text/javascript" src="js/users.js"></script>
     </head>
     <body>
-        <div>TODO write content</div>
+
+        <div id="content">
+            <div id="userGrid"></div>
+            <a href="#userDialog" role="button" class="btn btn-primary" id="addUser" data-toggle="modal">Add user</a>
+        </div>
+
+        <div class="modal" id="userDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h3 id="myModalLabel">Update data</h3>
+            </div>
+            <div class="modal-body" id="userData">
+                <table class="table">
+                    <tr>
+                        <td>User name:</td><td><input type="text" id="dialog-name" value="" style="width: 100%;"></td>
+                    </tr>
+                    <tr>
+                        <td>User login:</td><td><input type="text" id="dialog-login" value="" style="width: 100%;"></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td><td><input type="text" id="dialog-email" value="" style="width: 100%;"></td>
+                    </tr>
+                    <tr>
+                        <td>Homepage:</td><td><input type="text" id="dialog-homepage" value="" style="width: 100%;"></td>
+                    </tr>
+                    <tr>
+                        <td>Country:</td>
+                        <td>
+                            <select id="country-list">
+                                <option></option>
+                                <option>Russia</option>
+                                <option>USA</option>
+                                <option>Italia</option>
+                                <option>China</option>
+                                <option>Ukraine</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Status:</td>
+                        <td>
+                            <select id="status-list">
+                                <option></option>
+                                <option>guest</option>
+                                <option>user</option>
+                                <option>moderator</option>
+                                <option>admin</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" id="closeBtn" aria-hidden="true">Close</button>
+                <button class="btn btn-primary" id="saveBtn" >Save changes</button>
+            </div>
+        </div>
+
+        <style>
+            #content {
+                font-size: 12px;
+                width: 80%;
+                margin: 0 auto;
+            }
+        </style>
     </body>
 </html>

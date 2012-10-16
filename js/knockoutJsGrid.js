@@ -274,36 +274,40 @@
             //get all standart select and text filters
             var selectArr = $(element.selector + " thead tr:first select");
             var inputArr = $(element.selector + " thead tr:first input[type='text']")
-
             var filteredElements = []; //all filtered elements
+            var filterInput = []
+            var filterSelect = []
+
+            $.each(inputArr, function(key, input) {
+                if (!$(input).hasClass('customFilter')) {
+                    filterInput.push({"id": $(input).attr("id"), "value": $(input).val()})
+                }
+            });
+
+            $.each(selectArr, function(key, select) {
+                if (!$(select).hasClass('customFilter') && $(select).val() != 'Все' && $(select).val() != 'All') {
+                    filterSelect.push({"id": $(select).attr("id"), "value": $(select).val()})
+                }
+            });
 
             //filter by all elements of list
             $.each(self.allElements(), function(key, element) {
                 var addToFiltered = true;
 
                 //filter by all text fields
-                $.each(inputArr, function(key, input) {
-                    //ignore custom filters
-                    if (!$(input).hasClass('customFilter')) {
-                        var elementName = element[$(input).attr("id")]()
-
-                        if (elementName.indexOf($(input).val()) == '-1' && $(input).val() != '') {
-                            addToFiltered = false
-                        }
+                $.each(filterInput, function(key, input) {
+                    var elementName = element[input.id]()
+                    if (elementName.indexOf(input.value) == '-1' && input.value != '') {
+                        addToFiltered = false
                     }
                 });
 
-                //filter by all select fields
-                $.each(selectArr, function(key, select) {
-                    //ignore custom filters
-                    if (!$(select).hasClass('customFilter') && $.isFunction(element[$(select).attr("id")])) {
-                        var elementName = element[$(select).attr("id")]()
-                        if (elementName != $(select).val()
-                            && ($(select).val() != 'Все' && $(select).val() != 'All')
-                            && $(select).val() != null) {
+                //filter by all text fields
+                $.each(filterSelect, function(key, select) {
+                        var elementName = element[select.id]()
+                        if (elementName != select.value && select.value != null) {
                                 addToFiltered = false;
                         }
-                    }
                 });
 
                 if (addToFiltered) {

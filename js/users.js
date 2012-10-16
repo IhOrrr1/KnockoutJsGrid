@@ -50,12 +50,18 @@ $(function() {
         "status": {cssStyle: "input-medium", type: "select", data: ["All", "guest", "user", "moderator", "admin"]}
     });
 
+    viewModel.message = ko.observable()
+    viewModel.showMessage = ko.observable(false)
+
     /**
      * Remove rows from datagrid (extend viewModel)
      */
     viewModel.removeRow = function() {
+        viewModel.message(this.user_name() + " was removed from DataGrid!")
         viewModel.currentElements.remove(this)
         viewModel.allElements.remove(this)
+        viewModel.showMessage(true)
+        setTimeout(function() {viewModel.showMessage(false)},1500);
     };
 
     /**
@@ -84,6 +90,10 @@ $(function() {
 
             viewModel.currentElements()[userIndex] = currentUser;
             $("#userDialog").modal('hide')
+
+            viewModel.message("User " + currentUser.user_name() + " was edited!")
+            viewModel.showMessage(true)
+            setTimeout(function() {viewModel.showMessage(false)},1500);
         });
     };
 
@@ -108,6 +118,17 @@ $(function() {
             $("#userDialog").modal('hide')
         });
     });
+
+    ko.bindingHandlers.fadeFade = {
+        init: function(element, valueAccessor) {
+            var value = valueAccessor();
+            $(element).toggle(ko.utils.unwrapObservable(value));
+        },
+        update: function(element, valueAccessor) {
+            var value = valueAccessor();
+            ko.utils.unwrapObservable(value) ? $(element).fadeIn() : $(element).fadeOut();
+        }
+    };
 
     ko.applyBindings(viewModel, document.getElementById("usersGrid"));
 

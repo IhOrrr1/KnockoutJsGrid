@@ -61,7 +61,7 @@ $(function() {
         viewModel.currentElements.remove(this)
         viewModel.allElements.remove(this)
         viewModel.showMessage(true)
-        setTimeout(function() {viewModel.showMessage(false)},1500);
+        setTimeout(function() {viewModel.showMessage(false)},1000);
     };
 
     /**
@@ -93,7 +93,7 @@ $(function() {
 
             viewModel.message("User " + currentUser.user_name() + " was edited!")
             viewModel.showMessage(true)
-            setTimeout(function() {viewModel.showMessage(false)},1500);
+            setTimeout(function() {viewModel.showMessage(false)},1000);
         });
     };
 
@@ -119,7 +119,7 @@ $(function() {
         });
     });
 
-    ko.bindingHandlers.fadeFade = {
+    ko.bindingHandlers.fadeVisible = {
         init: function(element, valueAccessor) {
             var value = valueAccessor();
             $(element).toggle(ko.utils.unwrapObservable(value));

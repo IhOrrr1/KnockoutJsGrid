@@ -24,7 +24,7 @@
  *
  *     //add filter
  *     $.grid.filters({
- *         "user_name": {cssStyle: "input-xlarge", type: "text", placeholder: "Имя пользователя"},
+ *         "user_name": {cssStyle: "input-xlarge", type: "text", placeholder: "�?мя пользователя"},
  *         "user_login": {cssStyle: "input-medium", type: "select", data: ["Все", "1", "2", "3", "4", "5"]}
  *     });
  *
@@ -232,14 +232,22 @@
 
             //sort only not null elements
             var sortedElements = elementsNotNull
-            sortedElements.sort(function(x, y) {
+            sortedElements.sort(function(x,y){                
                 //check is field observable
                 if ($.isFunction(x[sortParam])) {
-                    return x[sortParam]() < y[sortParam]() ? 1 : (x[sortParam]() > y[sortParam]() ? -1 : 0);
+                    if (!isNaN(parseFloat(x[sortParam]())) && isFinite(x[sortParam]())) {
+                        return x[sortParam]()-y[sortParam]();
+                    } else {
+                        return x[sortParam]() < y[sortParam]() ? 1 : (x[sortParam]() > y[sortParam]() ? -1 : 0);
+                    }
                 } else {
-                    return x[sortParam] < y[sortParam] ? 1 : (x[sortParam] > y[sortParam] ? -1 : 0);
-                }
-            })
+                    if (!isNaN(parseFloat(x[sortParam])) && isFinite(x[sortParam])) {
+                        return x[sortParam]-y[sortParam];
+                    } else {
+                        return x[sortParam] < y[sortParam] ? 1 : (x[sortParam] > y[sortParam] ? -1 : 0); 
+                    }
+                }     
+            });
 
             //check desc or asc sorting
             var result = []
